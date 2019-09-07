@@ -25,12 +25,10 @@ void Mystack::printStack(){
     Node * currentNode = *Mystack::head;
     while( currentNode != NULL){
         int d = currentNode->data;
-
-
-        printf("%d ==>",d);
-        //std::cout << "==>" << d;
+        std::cout << "==>" << d;
         currentNode = currentNode->next;
     }
+    std::cout << std::endl;
 }
 
 int Mystack::pop(){
