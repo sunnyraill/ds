@@ -7,12 +7,12 @@ CFLAGS := -g -Wall -std=c++11
 CC := g++
 RM := /bin/rm -f
 # define any directories containing header files other than /usr/include# define any directories containing header files other than /usr/include#
-INCLUDES := -Iinclude -I${prefix}/include -I${prefix}/include/opencv4 -I${prefix}/include/leptonica -I${prefix}/include/tesseract
+INCLUDES := -Iinclude -I${prefix}/include
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS := -L${prefix}/lib -L${prefix}/lib64 -L${prefix2}/lib
+LFLAGS := -L${prefix}/lib
 
 # define any libraries to link into executable:
 #   if I want to link in lib -lopencv_core -lopencv_highgui
@@ -46,7 +46,7 @@ MAIN = sunny.exe
 .PHONY: depend clean
 
 all:    $(MAIN)
-	@echo  Simple compiler named autohyperlink has been compiled
+	@echo  Success!
 
 $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)

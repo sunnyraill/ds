@@ -9,9 +9,10 @@
 #define LINKEDLIST
 
 class LinkedList {
-        
-    public:
+    private:
         Node ** head;
+    public:
+        
         Node ** getHead();
         bool addFront(int n);
         bool pushBack(int n);
@@ -19,6 +20,7 @@ class LinkedList {
         int deleteBack();
         int peekFront();
         void print();
+        void reverse();
         LinkedList(){
             head = (Node**)malloc(sizeof(Node*));
         }

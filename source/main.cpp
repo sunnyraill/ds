@@ -24,13 +24,11 @@ void reverseLinkList(){
      llist->pushBack(8);
      llist->pushBack(17);
      llist->print();
-    // cout << "peeking linkedList : " << Stack->peek()<< std::endl;
-    // Stack->printStack();
-
+     llist->reverse();
+     llist->print();
 }
 
 int main(int argc, char **argv){
     cout <<  "hello world" <<endl;
-    //implementStackUSingLL();
     reverseLinkList();
 }

@@ -46,29 +46,27 @@ bool LinkedList::pushBack(int n){
 }
 
 int LinkedList::deleteBack(){
-    bool success = true;
     Node ** head = LinkedList::getHead();
     int data;
     if(*head == NULL){
         return INT16_MIN; // throwing error is better
     } else {
-        Node * current_node = *head, *prev_node = NULL;
-        while(current_node->next !=NULL){
-            prev_node = current_node;
-            current_node = current_node->next;
+        Node * currentnt_node = *head, *prev_node = NULL;
+        while(currentnt_node->next !=NULL){
+            prev_node = currentnt_node;
+            currentnt_node = currentnt_node->next;
         }
         if(prev_node != NULL)
             prev_node->next = NULL;
         else // this list has only one node
             *head = NULL;
-        data = current_node->data;
-        free(current_node);
+        data = currentnt_node->data;
+        free(currentnt_node);
     }
     return data;
 }
 
 int LinkedList::deleteFront(){
-    bool success = true;
     Node ** head = LinkedList::getHead();
     int data;
     if(*head == NULL){
@@ -91,12 +89,29 @@ int LinkedList::peekFront(){
 }
 
 void LinkedList::print(){
-    Node **top = LinkedList::getHead();
-    Node * current = *top;
-    while(current != NULL);
+    Node * current = *(this->head);
+    while (current != NULL)
     {
         std::cout << current->data << " ==> ";
         current = current->next;
     }
     std::cout << "NULL" << std::endl;
+}
+
+void LinkedList::reverse(){
+    Node * curr = *this->getHead();
+    Node * next = NULL, *temp =  NULL;
+     if(curr == NULL || curr->next == NULL){
+         return; //success
+     } else {
+         next = curr->next;
+         curr->next = NULL;
+     }
+     while(next != NULL){
+        temp = next->next;
+        next->next = curr;
+        curr = next;
+        next = temp;
+     }
+     *this->getHead() = curr;
 }
