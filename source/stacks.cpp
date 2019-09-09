@@ -21,6 +21,17 @@ Node * Mystack::getHead(){
     return *head;
 }
 
+void Mystack::deleteStack(){
+    Node * curr = *(Mystack::head);
+    Node * next = NULL; //curr->next;
+    // do scavanaging
+    while(curr !=NULL){
+        next = curr->next;
+        free (curr);
+        curr = next;
+    }
+}
+
 void Mystack::printStack(){
     Node * currentNode = *Mystack::head;
     while( currentNode != NULL){

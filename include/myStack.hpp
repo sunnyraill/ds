@@ -18,12 +18,13 @@ class Mystack {
         int pop();
         int peek();
         void printStack();
+        void deleteStack();
         Mystack(){
             head = (Node**) malloc(sizeof(Node**));
             *head = NULL;  
         }
         ~Mystack(){
-            //Node * curr = *head;
+            deleteStack();
             //free()
         }
 
