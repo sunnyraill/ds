@@ -1,5 +1,6 @@
 #include<iostream>
 #include <myStack.hpp>
+#include <LinkedList.hpp>
 using namespace std;
 
 void implementStackUSingLL(){
@@ -15,7 +16,21 @@ void implementStackUSingLL(){
     Stack->printStack();
 
 }
+
+void reverseLinkList(){
+    LinkedList *llist= new LinkedList();
+     llist->pushBack(10);
+     llist->pushBack(5);
+     llist->pushBack(8);
+     llist->pushBack(17);
+     llist->print();
+    // cout << "peeking linkedList : " << Stack->peek()<< std::endl;
+    // Stack->printStack();
+
+}
+
 int main(int argc, char **argv){
     cout <<  "hello world" <<endl;
-    implementStackUSingLL();
+    //implementStackUSingLL();
+    reverseLinkList();
 }

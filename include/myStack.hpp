@@ -1,5 +1,7 @@
 #include<iostream>
 
+#ifndef MY_STACK
+#define MY_STACK
 struct Node_s {
     int data;
     struct Node_s* next;
@@ -26,3 +28,5 @@ class Mystack {
         }
 
 };
+
+#endif
