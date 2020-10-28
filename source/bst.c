@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-typedef struct BSTNode {
-    int data;
-    struct BSTNode* left;
-    struct BSTNode* right;
-} BSTNode;
+#include "../include/bst.h"
 
 BSTNode * createNode(int data) {
     BSTNode * root = (BSTNode *)malloc(sizeof(BSTNode)*1);

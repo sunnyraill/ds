@@ -1,16 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include "../include/avl.h"
 #define max(a,b) a>b?a:b
 #define min(a,b) a>b?b:a
 #define MAX(a,b) a>b?a:b
 #define MIN(a,b) a>b?b:a
-typedef struct AVLNode {
-    int data;
-    struct AVLNode* left;
-    struct AVLNode* right;
-    int height;
-} AVLNode;
+
 
 AVLNode * createNode(int data) {
     AVLNode * root = (AVLNode *)malloc(sizeof(AVLNode)*1);
@@ -181,7 +177,7 @@ AVLNode * balance(AVLNode* root){
         
     return root;
 }
-AVLNode * deleteNodeRecursive(AVLNode * root, int data, AVLNode * prev){
+AVLNode * deleteNodeRecursive(AVLNode * root, int data, AVLNode * prev ){
     if(!root){
         return NULL;
     }
