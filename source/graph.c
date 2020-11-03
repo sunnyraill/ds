@@ -3,11 +3,7 @@
 #include <limits.h>
 #include "../include/stack.h"
 #include "../include/Queue.h"
-typedef struct Graph_s {
-    int V; // number of vertices
-    int E; // number of Edges
-    int ** Adj;
-} Graph;
+#include "../include/graph.h"
 
 Graph * readGraph(Graph *g){
     if(!g){
@@ -128,7 +124,14 @@ void DFS(Graph *g){
         }
     }
 }
-int main(){
+Graph * initGraph(){
+    Graph * g = (Graph*)malloc(1*sizeof(Graph));
+    g->V =0;
+    g->E =0;
+    g->Adj = NULL;
+    return g;
+}
+/*int main(){
     Graph * g = (Graph*)malloc(1*sizeof(Graph));
     g->V =0;
     g->E =0;
@@ -139,4 +142,4 @@ int main(){
 
     DFS(g);
     BFS(g);
-}
+}*/
