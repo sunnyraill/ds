@@ -1,14 +1,14 @@
 //#include "Queue.h"
 #include "../include/Queue.h"
 
-int isFull (Queue* queue){
+int isQueueFull (Queue* queue){
     if(queue->front == (queue->rear + 1)%queue->capacity)
         return 1;
     
     return 0;
 }
 
-int isEmpty (Queue* queue){
+int isQueueEmpty (Queue* queue){
     if(queue->front == -1)
         return 1;
         
@@ -39,7 +39,7 @@ int expandQueue(Queue *queue) {
 }
 
 void enqueue (int data, Queue * queue){
-    if(isFull(queue))
+    if(isQueueFull(queue))
     {
         int success = expandQueue(queue);
         if(!success){
@@ -58,7 +58,7 @@ void enqueue (int data, Queue * queue){
 }
 
 int dequeue (Queue* queue) {
-    if(!isEmpty(queue))
+    if(!isQueueEmpty(queue))
     {
         int data = queue->data[queue->front];
         
@@ -96,7 +96,7 @@ Queue * initQueue() {
 }
 
 void printQueue(Queue *queue){
-    if(isEmpty(queue))
+    if(isQueueEmpty(queue))
         return;
     int i=0;
     for(i=queue->front;i<=queue->rear;i++){
@@ -104,7 +104,7 @@ void printQueue(Queue *queue){
     }
     
 }
-int main (){
+/*int main (){
     Queue * queue = initQueue();
     int i=0;
     for(int i=0; i<100; i++){
@@ -116,4 +116,4 @@ int main (){
         dequeue(queue);
     }
     printQueue(queue);
-}
+}*/

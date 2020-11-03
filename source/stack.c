@@ -5,7 +5,7 @@
 #include "../include/stack.h"
 
 
-int isEmpty(Stack *s){
+int isStackEmpty(Stack *s){
     if(!s)
         return 1;
     if(!s->head)
@@ -13,7 +13,7 @@ int isEmpty(Stack *s){
     
     return 0;
 }
-int isFull(Stack *s){
+int isStackFull(Stack *s){
     return 0;
 }
 
@@ -52,7 +52,7 @@ int pop (Stack *s){
 
 int peek(Stack *s){
     
-    if(!isEmpty(s))
+    if(!isStackEmpty(s))
         return s->head->data;
     
     return INT_MIN;
@@ -60,7 +60,7 @@ int peek(Stack *s){
 void printStack(Stack *s){
     if(!s)
         return;
-    if(!isEmpty(s)){
+    if(!isStackEmpty(s)){
         Node * current = s->head;
         while(current){
             printf(" --> %d ",current->data);
@@ -80,7 +80,7 @@ Stack* CreateStack(){
 void deleteStack(Stack *s){
     if(!s)
         return;
-    if(!isEmpty(s)){
+    if(!isStackEmpty(s)){
         while(s->head){
             Node * temp = s->head;
             s->head = s->head->next;
@@ -91,7 +91,7 @@ void deleteStack(Stack *s){
     free(s);
 }
 
-
+/*
 int main(){
     Stack *s = CreateStack();
     for(int i=0;i<100;i++)
@@ -101,4 +101,4 @@ int main(){
         pop(s);
     printStack(s);
     return 0;
-}
+} */

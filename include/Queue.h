@@ -11,8 +11,8 @@ typedef struct queue_s {
     int * data;
 } Queue;
 
-int isFull (Queue* queue);
-int isEmpty (Queue* queue);
+int isQueueFull (Queue* queue);
+int isQueueEmpty (Queue* queue);
 
 void enqueue (int data, Queue * queue);
 int dequeue (Queue* queue);
