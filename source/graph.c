@@ -126,7 +126,7 @@ void DFS(Graph *g){
             if(isConnected(g,node,i) && !visited[i])
             {
                 push(s,i);
-                break;
+                //break;
             }
         }
     }
@@ -168,9 +168,9 @@ void ShortestPathFrom(Graph *g, int sourceVertex){
     distance[sourceVertex] = 0;
     enqueue(sourceVertex, q);
     while(!isQueueEmpty(q)){
-        int node = dequeue(q);
+        int node = dequeue(q);   //if using priority queue then it will be delete min
         visited[node] = 1;
-        int minDist = INT_MAX, unvisitedNeighbourNearestToSource =-1 ;
+        int minDist = INT_MAX, unVisitedNeighbourNearestToSource =-1 ;
         for(int i=0;i<g->V;i++){
             if(isConnected(g,node,i) && visited[i]<1)
             {
@@ -183,12 +183,12 @@ void ShortestPathFrom(Graph *g, int sourceVertex){
             if(visited[i]<1) {
                 if(distance[i]<minDist && visited[i]<1){
                     minDist = distance[i];
-                    unvisitedNeighbourNearestToSource = i;
+                    unVisitedNeighbourNearestToSource = i;
                 }
             }
         }
-        if(unvisitedNeighbourNearestToSource>0)
-            enqueue(unvisitedNeighbourNearestToSource,q);
+        if(unVisitedNeighbourNearestToSource>0)
+            enqueue(unVisitedNeighbourNearestToSource,q);
     }
 
     for(int i=0;i<g->V;i++){
@@ -227,7 +227,7 @@ void ShortestPathFrom(Graph *g, int sourceVertex){
         visited = NULL;
     }
 }
-int main(){
+/*int main(){
     Graph * g = (Graph*)malloc(1*sizeof(Graph));
     g->V =0;
     g->E =0;
@@ -237,6 +237,6 @@ int main(){
     printGraph(g);
 
     DFS(g);
-    BFS(g);
-    ShortestPathFrom(g,0);
-}
+    //BFS(g);
+    //ShortestPathFrom(g,0);
+}*/
