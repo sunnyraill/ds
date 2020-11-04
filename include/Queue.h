@@ -17,7 +17,7 @@ int isQueueEmpty (Queue* queue);
 void enqueue (int data, Queue * queue);
 int dequeue (Queue* queue);
 Queue * initQueue();
-
+void deleteQueue(Queue *q);
 
 void printQueue(Queue *queue);
 

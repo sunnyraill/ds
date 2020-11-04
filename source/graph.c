@@ -65,7 +65,7 @@ int isConnected(Graph *g,int base, int destination){
         return -1;
     }
     if(g->Adj[base][destination])
-        return 1;
+        return g->Adj[base][destination];
 
     return 0;
 }
@@ -95,6 +95,13 @@ void BFS(Graph *g){
         }
     }
 
+    deleteQueue(q);
+    if(visited)
+        {
+            free(visited);
+            visited = NULL;
+        }
+
 }
 void DFS(Graph *g){
     if(!g || !g->V)
@@ -123,6 +130,13 @@ void DFS(Graph *g){
             }
         }
     }
+
+    deleteStack(s);
+    if(visited)
+    {
+        free(visited);
+        visited = NULL;
+    }
 }
 Graph * initGraph(){
     Graph * g = (Graph*)malloc(1*sizeof(Graph));
@@ -131,7 +145,89 @@ Graph * initGraph(){
     g->Adj = NULL;
     return g;
 }
-/*int main(){
+
+void ShortestPathFrom(Graph *g, int sourceVertex){
+    if(!g || sourceVertex <0 || sourceVertex >= g->V)
+        return;
+
+    int * distance = (int*)malloc(g->V * sizeof(int));
+    int * path = (int*)malloc(g->V * sizeof(int));
+    int * visited = (int*)malloc(g->V * sizeof(int));
+    if(!distance || !path || !visited)
+    {
+        printf("not enough memory \n");
+        return;
+    }
+    for(int i=0;i<g->V;i++){
+        distance[i] = INT_MAX;
+        path[i] = -1;
+        visited[i] = 0;
+    }
+    
+    Queue *q = initQueue();
+    distance[sourceVertex] = 0;
+    enqueue(sourceVertex, q);
+    while(!isQueueEmpty(q)){
+        int node = dequeue(q);
+        visited[node] = 1;
+        int minDist = INT_MAX, unvisitedNeighbourNearestToSource =-1 ;
+        for(int i=0;i<g->V;i++){
+            if(isConnected(g,node,i) && visited[i]<1)
+            {
+                int cost = distance[node] + isConnected(g,node,i);
+                if(cost<distance[i]){
+                    distance[i] = cost;
+                    path[i] = node;
+                }   
+            }
+            if(visited[i]<1) {
+                if(distance[i]<minDist && visited[i]<1){
+                    minDist = distance[i];
+                    unvisitedNeighbourNearestToSource = i;
+                }
+            }
+        }
+        if(unvisitedNeighbourNearestToSource>0)
+            enqueue(unvisitedNeighbourNearestToSource,q);
+    }
+
+    for(int i=0;i<g->V;i++){
+        if(i == sourceVertex)
+            continue;
+        printf("distance of %d from %d is %d\n", i+1, sourceVertex+1,distance[i]);
+        Stack *s = CreateStack();
+        int j = i;
+        do {
+            push(s,j);
+            if(j == path[j]){
+                break;
+            } else {
+                j = path[j];
+            }
+        } while (j != sourceVertex);
+        printf("Path : %d",sourceVertex+1);
+        while(!isStackEmpty(s)){
+            printf(" --> %d ", pop(s)+1);
+        }
+        printf("\n");
+        deleteStack(s);
+    }
+    
+    deleteQueue(q);
+    if(distance) {
+        free(distance);
+        distance = NULL;
+    }
+    if(path) {
+        free(path);
+        path = NULL;
+    }
+    if(visited) {
+        free(visited);
+        visited = NULL;
+    }
+}
+int main(){
     Graph * g = (Graph*)malloc(1*sizeof(Graph));
     g->V =0;
     g->E =0;
@@ -142,4 +238,5 @@ Graph * initGraph(){
 
     DFS(g);
     BFS(g);
-}*/
+    ShortestPathFrom(g,0);
+}

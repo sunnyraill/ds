@@ -104,6 +104,18 @@ void printQueue(Queue *queue){
     }
     
 }
+
+void deleteQueue(Queue *q){
+    if(!q)
+        return;
+    if(q->data){
+        free(q->data);
+        q->data = NULL;
+    }
+    free(q);
+    q= NULL;
+    return;
+}
 /*int main (){
     Queue * queue = initQueue();
     int i=0;
