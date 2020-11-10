@@ -172,6 +172,7 @@ void DFS_agraph(agraph* g){
 
 int main(){
     agraph * g = createAGraph();
+    
     g = readAGraph(g);
 
     BFS_agraph(g);

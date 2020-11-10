@@ -8,7 +8,7 @@
 #define MIN(a,b) a>b?b:a
 
 
-AVLNode * createNode(int data) {
+AVLNode * createAVLNode(int data) {
     AVLNode * root = (AVLNode *)malloc(sizeof(AVLNode)*1);
     root->left = NULL;
     root ->right = NULL;
@@ -17,11 +17,11 @@ AVLNode * createNode(int data) {
     return root;
 }
 
-int Height(AVLNode* node){
+static int Height(AVLNode* node){
     return node ? node->height : -1;
 }
 
-AVLNode* singleRR(AVLNode* w){
+static AVLNode* singleRR(AVLNode* w){
     AVLNode * x = w->right;
     w->right = x->left;
     x->left = w;
@@ -31,7 +31,7 @@ AVLNode* singleRR(AVLNode* w){
     x->height = MAX(Height(w),Height(x->right))+1;
     return x;
 }
-AVLNode* singleLL(AVLNode* w){
+static AVLNode* singleLL(AVLNode* w){
     AVLNode * x = w->left;
     w->left = x->right;
     x->right = w;
@@ -42,12 +42,12 @@ AVLNode* singleLL(AVLNode* w){
     return x;
 }
 
-AVLNode* DoubleRL(AVLNode *z){
+static AVLNode* DoubleRL(AVLNode *z){
     z->right = singleLL(z->right);
     return singleRR(z);
     
 }
-AVLNode * DoubleLR(AVLNode *z){
+static AVLNode * DoubleLR(AVLNode *z){
     z->left = singleRR(z->left);
     return singleLL(z);
 }
@@ -55,7 +55,7 @@ AVLNode * DoubleLR(AVLNode *z){
 
 AVLNode* insertAVLNode(AVLNode * root, int data){
     if(!root)
-        return createNode(data);
+        return createAVLNode(data);
     
     if(root->data < data){
         root->right = insertAVLNode(root->right, data);
@@ -86,7 +86,7 @@ AVLNode* insertAVLNode(AVLNode * root, int data){
     return root;
 }
 
-AVLNode * createSeqTree() {
+static AVLNode * createSeqTree() {
     AVLNode * root = NULL;
     int i=0;
     for(i=0;i<10;i++){
@@ -95,7 +95,7 @@ AVLNode * createSeqTree() {
     return root;
 }
 
-AVLNode * findMinOfBST(AVLNode *root){
+AVLNode * findMinOfAVLBST(AVLNode *root){
     if(!root)
         return NULL;
     
@@ -106,7 +106,7 @@ AVLNode * findMinOfBST(AVLNode *root){
     
 }
 
-AVLNode * findMaxOfBST(AVLNode *root){
+AVLNode * findMaxOfAVLBST(AVLNode *root){
     if(!root)
         return NULL;
     
@@ -118,31 +118,31 @@ AVLNode * findMaxOfBST(AVLNode *root){
 
 
 
-void deleteTree(AVLNode * root){
+void deleteAVLTree(AVLNode * root){
     if(root){
-        deleteTree(root->left);
+        deleteAVLTree(root->left);
         AVLNode *temp = root->right;
         free(root);
-        deleteTree(root->right);
+        deleteAVLTree(root->right);
     }
 }
-void inOrderTraverse (AVLNode * root) {
+void inOrderTraverseAVL (AVLNode * root) {
     if(!root)
         return;
-    inOrderTraverse(root->left);
+    inOrderTraverseAVL(root->left);
     printf("-> %d ",root->data);
-    inOrderTraverse(root->right);
+    inOrderTraverseAVL(root->right);
 }
 
-AVLNode * searchNode(AVLNode * root, int data){
+AVLNode * searchAVLNode(AVLNode * root, int data){
     if(!root){
         return NULL;
     }
     AVLNode * dataNode = root;
     if(root->data < data)
-        dataNode = searchNode(root->right, data);
+        dataNode = searchAVLNode(root->right, data);
     else if (root->data > data)
-        dataNode = searchNode(root->left, data);
+        dataNode = searchAVLNode(root->left, data);
     return dataNode;
     
 }
@@ -177,23 +177,23 @@ AVLNode * balance(AVLNode* root){
         
     return root;
 }
-AVLNode * deleteNodeRecursive(AVLNode * root, int data, AVLNode * prev ){
+AVLNode * deleteAVLNodeRecursive(AVLNode * root, int data, AVLNode * prev ){
     if(!root){
         return NULL;
     }
     if(root->data < data){
-        root->right = deleteNodeRecursive(root->right, data, root);
+        root->right = deleteAVLNodeRecursive(root->right, data, root);
         root = balance(root);
     }
     else if (root->data > data) {
-        root->left = deleteNodeRecursive(root->left, data, root);
+        root->left = deleteAVLNodeRecursive(root->left, data, root);
         root = balance(root);
     }
     else {
         if(root->left && root->right){ // both kids
-            root->data = findMaxOfBST(root->left)->data;
+            root->data = findMaxOfAVLBST(root->left)->data;
             printf(" will be calling itself recursively \n");
-            root->left = deleteNodeRecursive(root->left,root->data, root );
+            root->left = deleteAVLNodeRecursive(root->left,root->data, root );
         } else if(!prev){
             AVLNode *temp =  root->right ? root->right : root->left;
             free(root);
@@ -223,7 +223,7 @@ AVLNode * deleteNodeRecursive(AVLNode * root, int data, AVLNode * prev ){
 }
 
 
-AVLNode * deleteNode(AVLNode * root, int data){
+AVLNode * deleteAVLNode(AVLNode * root, int data){
     if(!root){
         return NULL;
     }
@@ -240,9 +240,9 @@ AVLNode * deleteNode(AVLNode * root, int data){
         }
         else {
             if(root->left && root->right){ // both kids
-                root->data = findMaxOfBST(root->left)->data;
+                root->data = findMaxOfAVLBST(root->left)->data;
                 printf(" will be calling itself recursively \n");
-                root->left = deleteNode(root->left,root->data );
+                root->left = deleteAVLNode(root->left,root->data );
             } else if(!prev){
                 AVLNode *temp =  root->right ? root->right : root->left;
                 free(root);
@@ -268,13 +268,13 @@ AVLNode * deleteNode(AVLNode * root, int data){
     return origRoot;
 }
 
-int main(){
+/*int main(){
     AVLNode * root =  createSeqTree();
-    inOrderTraverse(root);
+    inOrderTraverseAVL(root);
     printf(" deleted Node 4 \n");
-    deleteNodeRecursive(root, 4,NULL);
+    deleteAVLNodeRecursive(root, 4,NULL);
     printf(" deleted Success \n");
-    inOrderTraverse(root);
-    deleteTree(root);
-}
+    inOrderTraverseAVL(root);
+    deleteAVLTree(root);
+}*/
 

@@ -83,7 +83,7 @@ void deleteTree(BSTNode * root){
         deleteTree(root->left);
         BSTNode *temp = root->right;
         free(root);
-        deleteTree(root->right);
+        deleteTree(temp);
     }
 }
 void inOrderTraverse (BSTNode * root) {
@@ -152,7 +152,7 @@ BSTNode * deleteNode(BSTNode * root, int data){
     return origRoot;
 }
 
-int main(){
+/*int main(){
     BSTNode * root =  createTree();
     inOrderTraverse(root);
     printf(" deleted Node 4 \n");
@@ -160,4 +160,4 @@ int main(){
     printf(" deleted Success \n");
     inOrderTraverse(root);
     deleteTree(root);
-}
+}*/

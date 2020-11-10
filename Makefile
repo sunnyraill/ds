@@ -4,7 +4,7 @@ prefix2 = /usr
 # define any compile-time flags
 CFLAGS := -g -Wall -std=c++11
 # define the C compiler to use
-CC := g++
+CC := gcc
 RM := /bin/rm -f
 # define any directories containing header files other than /usr/include# define any directories containing header files other than /usr/include#
 INCLUDES := -Iinclude -I${prefix}/include
@@ -20,7 +20,7 @@ LFLAGS := -L${prefix}/lib
 #LIBS = -ltesseract -lpthread -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_objdetect -lopencv_flann -lopencv_features2d -lopencv_imgproc
 
 # define source files
-AH_SRC := $(sort $(wildcard source/*.cpp))
+AH_SRC := $(sort $(wildcard source/*.c))
 # define the C object files
 #
 # This uses Suffix Replacement within a macro:
@@ -28,7 +28,7 @@ AH_SRC := $(sort $(wildcard source/*.cpp))
 #         For each word in 'name' replace 'string1' with 'string2'
 # Below we are replacing the suffix .c of all words in the macro SRCS
 # with the .o suffix
-OBJS := $(AH_SRC:.cpp=.o)
+OBJS := $(AH_SRC:.c=.o)
 #OBJS := $(AH_SRC:.cpp=.o)
 #OBJS :
 #	$(CC) $(CFLAGS) $(INCLUDES) -c $<

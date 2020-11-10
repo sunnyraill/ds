@@ -135,7 +135,7 @@ void deleteHeap(Heap * h){
         h=NULL;
     }
 }
-int main(){
+/*int main(){
     Heap *h = createHeap();
     
     for(int i=100;i<110;i++){
@@ -158,4 +158,4 @@ int main(){
     printHeap(h);
     deleteHeap(h);
     return 0;
-}
+}*/

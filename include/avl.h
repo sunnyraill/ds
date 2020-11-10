@@ -10,15 +10,15 @@ typedef struct AVLNode {
 
 AVLNode* insertAVLNode(AVLNode * root, int data);
 
-AVLNode * findMinOfBST(AVLNode *root);
-AVLNode * findMaxOfBST(AVLNode *root);
-AVLNode * searchNode(AVLNode * root, int data);
+AVLNode * findMinOfAVLBST(AVLNode *root);
+AVLNode * findMaxOfAVLBST(AVLNode *root);
+AVLNode * searchAVLNode(AVLNode * root, int data);
 
 //pass prev as NULL
-AVLNode * deleteNodeRecursive(AVLNode * root, int data, AVLNode * prev);
+AVLNode * deleteAVLNodeRecursive(AVLNode * root, int data, AVLNode * prev);
 
-void inOrderTraverse (AVLNode * root);
-void deleteTree(AVLNode * root);
+void inOrderTraverseAVL (AVLNode * root);
+void deleteAVLTree(AVLNode * root);
 
 
 #endif
