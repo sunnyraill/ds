@@ -3,11 +3,13 @@
 #include <limits.h>
 #include "../include/stack.h"
 #include "../include/Queue.h"
+#include "../include/priorityQueue.h"
 //#include "../include/graph.h"
 
 typedef struct adj_node
 {
     int data;
+    int cost;
     struct adj_node* next;
 } anode;
 
@@ -97,6 +99,7 @@ int isEdge(agraph* g, int v1, int v2){
 }
 
 void BFS_agraph(agraph* g){
+    fprintf(stdout, "Running BFS\n");
     if(!g || !g->V)
         return;
 
@@ -134,6 +137,7 @@ void BFS_agraph(agraph* g){
 }
 
 void DFS_agraph(agraph* g){
+    fprintf(stdout, "Running DFS\n");
     if(!g || !g->V)
         return;
 
@@ -170,12 +174,82 @@ void DFS_agraph(agraph* g){
     }
 }
 
+void Dijkstra(agraph *g){
+    fprintf(stdout, "Running Dijkstra\n");
+    if(!g || !g->V)
+        return;
+    
+    int * removed = (int*)malloc(g->V * sizeof(int));
+    if(!removed)
+    {
+        fprintf(stderr, "not Enough Memory");
+        return;
+    } else {
+        for(int i=0;i<g->V;i++){
+            removed[i]=0;
+        }
+    }
+
+    int * parent = (int*)malloc(g->V * sizeof(int));
+    if(!parent)
+    {
+        fprintf(stderr, "not Enough Memory");
+        return;
+    } else {
+        for(int i=0;i<g->V;i++){
+            parent[i]=-1;
+        }
+    }
+
+    int * cost = (int*)malloc(g->V * sizeof(int));
+    if(!cost)
+    {
+        fprintf(stderr, "not Enough Memory");
+        return;
+    } else {
+        for(int i=0;i<g->V;i++){
+            cost[i]=INT_MAX;
+        }
+    }
+
+    anode ** heap_nodes = (anode**)malloc(g->V * sizeof(anode*));
+    if(!heap_nodes)
+    {
+        fprintf(stderr, "not Enough Memory");
+        return;
+    } else {
+        for(int i=0;i<g->V;i++){
+            heap_nodes[i]=NULL;
+        }
+    }
+
+    PQ * h = createPQ();
+    enqueuePQ(h,0,0);
+    int minCost = INT_MAX;
+    while(h->count > 0){
+        int node = dequePQ(h); //need to create min heap
+
+        anode * base = g->list + node;
+        anode * current_node = base->next;
+        while(current_node != base){
+            int newcost = cost[node] + current_node->data;
+            if(newcost<cost[current_node->data]){
+                cost[current_node->data] = newcost;
+                parent[current_node->data] = node;
+            }
+        }
+
+    }
+}
+
 int main(){
     agraph * g = createAGraph();
-    
+
     g = readAGraph(g);
 
-    BFS_agraph(g);
+    //BFS_agraph(g);
 
-    DFS_agraph(g);
+    //DFS_agraph(g);
+
+    Dijkstra(g);
 }

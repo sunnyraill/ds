@@ -13,10 +13,10 @@ typedef struct heap_s {
     int heap_type;
 } Heap;
 
-void insert(Heap *h, int data);
-void deleteMax(Heap *h);
+void heapInsert(Heap *h, int data);
+void heapDeleteMax(Heap *h);
 void printHeap(Heap *h);
 Heap * createHeap();
 void deleteHeap(Heap * h);
-int getMax(Heap *h);
+int heapGetMax(Heap *h);
 #endif

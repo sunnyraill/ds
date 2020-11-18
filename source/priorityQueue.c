@@ -2,35 +2,32 @@
 #include<stdlib.h>
 #include<limits.h>
 //#include<math.h>
-#include "../include/heap.h"
+#include "../include/priorityQueue.h"
 
 
-
-
-
-int getParent(int i){
+static int getParent(int i){
     return (i-1)/2;
 }
-int getLeft(int i){
+static int getLeft(int i){
     return 2*i +1;
 }
-int getRight(int i){
+static int getRight(int i){
     return 2*i+2;
 }
 
-void percolateUp(Heap *h, int index){
+static void percolateUp(PQ *h, int index){
     int parentIndex = getParent(index);
     if(index<1 || parentIndex<0 || !h){
         return;
     }
-    if(h->data[parentIndex] < h->data[index]){ //bubble up whichever is larger
-        int temp = h->data[parentIndex];
+    if(h->data[parentIndex].priority > h->data[index].priority){ //bubble up whichever is smaller
+        DataPQ temp = h->data[parentIndex];
         h->data[parentIndex] = h->data[index];
         h->data[index] = temp;
     }
     percolateUp(h,parentIndex);
 }
-void percolateDown(Heap *h, int index){
+static void percolateDown(PQ *h, int index){
     if(!h)
         return;
     int leftChildIndex = getLeft(index);
@@ -43,15 +40,15 @@ void percolateDown(Heap *h, int index){
         return;
     }
     
-    if( hasLeftChild && (h->data[leftChildIndex] > h->data[index])){  //bubble up whichever is larger
-        int temp = h->data[leftChildIndex];
+    if( hasLeftChild && (h->data[leftChildIndex].priority < h->data[index].priority)){  //bubble up whichever is smaller
+        DataPQ temp = h->data[leftChildIndex];
         h->data[leftChildIndex] = h->data[index];
         h->data[index] = temp;
         max= leftChildIndex;
     }
     
-   if( hasRightChild && (h->data[rightChildIndex] > h->data[index])){  //bubble up whichever is larger
-       int temp = h->data[rightChildIndex];
+   if( hasRightChild && (h->data[rightChildIndex].priority < h->data[index].priority)){  //bubble up whichever is smaller
+       DataPQ temp = h->data[rightChildIndex];
        h->data[rightChildIndex] = h->data[index];
        h->data[index] = temp;
        max=rightChildIndex;
@@ -61,12 +58,12 @@ void percolateDown(Heap *h, int index){
       percolateDown(h,max);
 }
       
-void ensureCapacity(Heap * h){
+static void ensureCapacity(PQ * h){
     if(!h)
         return;
     if(h->capacity<1){  //no capacity to store even one item
-        h->capacity = HEAP_CAPACITY; //10 items
-        h->data = (int*)malloc(sizeof(int)*(h->capacity));
+        h->capacity = PQ_CAPACITY; //10 items
+        h->data = (DataPQ*)malloc(sizeof(DataPQ)*(h->capacity));
         if(!h->data){
             printf("Not enough memory !");
             return;
@@ -74,57 +71,61 @@ void ensureCapacity(Heap * h){
         
     } else if(h->count+1 > h->capacity-1){
         int i=-1;
-        int * newData = NULL;
+        DataPQ * newData = NULL;
         h->capacity = 2 * h->capacity;
-        newData = (int*)malloc(sizeof(int)*(h->capacity));
+        newData = (DataPQ*)malloc(sizeof(DataPQ)*(h->capacity));
         if(!newData){
             printf("Not enough memory !");
             return;
         }
         for(i=0;i<=h->count;i++){
-            newData[i]=h->data[i];
+            newData[i].data=h->data[i].data;
+            newData[i].priority=h->data[i].priority;
         }
         free(h->data);
         h->data = newData;
     }
 }
-void heapInsert(Heap *h, int data){
+void enqueuePQ(PQ *h, int data, int priority){
     ensureCapacity(h);
     h->count++;
-    h->data[h->count] = data;
+    h->data[h->count].data = data;
+    h->data[h->count].priority = priority;
     percolateUp(h,h->count);
 }
 
-void heapDeleteMax(Heap *h){
+int dequePQ(PQ *h){
     if(h->count <0)
-        return;
+        return INT_MAX;
+    int dataToBeReturned = h->data[0].data;
     h->data[0] = h->data[h->count];
     h->count--;
     percolateDown(h,0);
+    return dataToBeReturned;
 }
       
-int heapGetMax(Heap *h){
+int PQGetMin(PQ *h){
     if(h->count <0)
-        return INT_MIN;
-    return h->data[0];
+        return INT_MAX;
+    return h->data[0].data;
 }
-void printHeap(Heap *h){
+void printPQ(PQ *h){
     //int height = ln(h->count+1);
     //int noOfLeaves = pow(2,height);
     for(int i=0;i<=h->count;i++){
-        printf("%d ",h->data[i]);
+        printf("%d ",h->data[i].data);
     }
 }
-Heap * createHeap(){
-        Heap * h = (Heap*)malloc(1 * sizeof(Heap));
+PQ * createPQ(){
+        PQ * h = (PQ*)malloc(1 * sizeof(PQ));
         h->count = -1;
         h->data = NULL;
         h->capacity = 0;
-        h->heap_type = MAX_HEAP;
+        h->pq_type = MIN_PQ;
     return h;
 }
 
-void deleteHeap(Heap * h){
+void deletePQ(PQ * h){
     if(h){
         if(h->data)
         {
