@@ -6,6 +6,15 @@
 #include "../include/priorityQueue.h"
 //#include "../include/graph.h"
 
+
+/**
+ * Implementation of graph in Adjecy list format
+ * 
+ * 
+ * 
+ * 
+ **/
+ 
 typedef struct adj_node
 {
     int data;
@@ -242,14 +251,14 @@ void Dijkstra(agraph *g){
     }
 }
 
-int main(){
-    agraph * g = createAGraph();
+// int main(){
+//     agraph * g = createAGraph();
 
-    g = readAGraph(g);
+//     g = readAGraph(g);
 
-    //BFS_agraph(g);
+//     //BFS_agraph(g);
 
-    //DFS_agraph(g);
+//     //DFS_agraph(g);
 
-    Dijkstra(g);
-}
+//     Dijkstra(g);
+// }
